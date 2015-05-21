@@ -1,3 +1,9 @@
+/*
+CG - TRABALHO 2
+JOSÉ AUGUSTO COMIOTTO ROTTINI - ENGENHARIA DE COMPUTACAO - UFSM
+
+	Definição da classe vetor.
+*/
 #ifndef VETOR_H
 #define VETOR_H
 #include "Ponto.h"

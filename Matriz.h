@@ -1,3 +1,9 @@
+/*
+CG - TRABALHO 2
+JOSÉ AUGUSTO COMIOTTO ROTTINI - ENGENHARIA DE COMPUTACAO - UFSM
+
+    Definição da classe Matriz
+*/
 #ifndef MATRIZ_H
 #define MATRIZ_H
 
@@ -9,7 +15,6 @@ class Matriz
         int linhas, colunas;
 
         Matriz();
-       // void operator* (const Matriz& a);
         void rotacao(float ang);
         void translada(int tx, int ty);
         void escala(int sx, int sy);

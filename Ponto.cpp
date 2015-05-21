@@ -23,6 +23,7 @@ Ponto::~Ponto()
     //dtor
 }
 
+// Operadores para ponto homogeneo:
 Ponto Ponto::operator*(float num)
 {
     Ponto pontoResultante(x * num, y * num);

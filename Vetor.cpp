@@ -29,7 +29,7 @@ Vetor::~Vetor()
     //dtor
 }
 
-void Vetor:: normaliza()
+void Vetor:: normaliza() // normaliza o tamanho do vetor
 {
     float modulo = sqrt(pow(x,2)+pow (y,2));
     x = x / modulo;

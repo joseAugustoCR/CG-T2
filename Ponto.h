@@ -1,4 +1,10 @@
-#ifndef PONTO_H
+/*
+CG - TRABALHO 2
+JOSÉ AUGUSTO COMIOTTO ROTTINI - ENGENHARIA DE COMPUTACAO - UFSM
+
+    Definição da classe ponto.
+*/
+ifndef PONTO_H
 #define PONTO_H
 
 
@@ -10,8 +16,6 @@ class Ponto
         float x,y;
         Ponto(float x1, float y1);
         virtual ~Ponto();
-        //int getX();
-        //int getY();
         Ponto operator+=(const Ponto& ponto);
         Ponto operator+(const Ponto& ponto);
         Ponto operator-(const Ponto& ponto);

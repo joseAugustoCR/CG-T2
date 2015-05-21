@@ -6,48 +6,18 @@
 
 */
 
-
 #include "widget.h"
 #include "Ponto.h"
 #include <vector>
 #include "vetor.h"
 #include "Matriz.h"
 #include "Application.h"
-
-#include <SCV/ColorScheme.h>
-#include <SCV/Color4f.h>
-#include <SCV/Canvas.h>
-#include <SCV/ContextMenu.h>
-
 #include <SCV\Point.h>
 
 
-#include "SCV/SCVCallbacks.h"
-
-//using namespace scv;
 Ponto pontoInicial(0,0);
 
-
-
-//Ponto tangente(0, 0);
-/*Ponto p1(0,0);	// NOVO PONTO CADA VEZ
-Ponto p2(0,0);
-Ponto p2Anterior(0, 0);
-Ponto p1Anterior(0, 0);
-Ponto novoP1 (0,0);
-Ponto novoP2 (0,0);
-Ponto novoInferiorEsquerdo(0, 0);
-Ponto novoInferiorDireito(0, 0);
-Ponto novoSuperiorEsquerdo(0, 0);
-Ponto novoSuperiorDireito(0, 0);*/
-
-
-
-//float angulo = 0;
 int posicaoAtual = 0;
-
-
-int cliques=0;
 bool buttonOk = false;
 bool botaoClear = false;
 bool buttonViewControlGraphs = false;
@@ -56,7 +26,7 @@ bool first = false;
 float tempo = 0;
 float speed = 0;
 
-std::vector <Ponto> pontosDeControle;// = {Ponto(50,50), Ponto(100,100), Ponto(50,150)};
+std::vector <Ponto> pontosDeControle;
 std::vector<Ponto> subPontosDeControle;
 std::vector<Ponto> subPontosDeControle2;
 std::vector<Ponto> pontosAdicionados;
@@ -157,7 +127,6 @@ void suavizaCurva()
 		}
 		smooth = true;
 	}
-	
 }
 
 /* MULTIPLICA A MATRIZ DE TRANSFORMACAO POR UM PONTO */
@@ -237,21 +206,12 @@ void CanvasPista::drawRoad()
 				first = true;
 			}
 
-			//Ponto pontoBezierAnterior(0, 0);
 			for (float t = 0; t < 1; t += 0.005)		// Desenha cada segmento de curva
 			{
 				Ponto pontoBezier = bezier(subPontosDeControle, t);
 
-				/*if (t > 0)
-				{
-					color(1, 1, 0);
-					linef(pontoBezierAnterior.x, pontoBezierAnterior.y, pontoBezier.x, pontoBezier.y);
-				}*/
-
 				color(0.1, 0.1, 0.1);
 				circleFill(scv::Point(pontoBezier.x, pontoBezier.y), 18, 20);	// Desenha a estrada
-
-				//pontoBezierAnterior = pontoBezier;
 			}
 		}
 	}
@@ -312,23 +272,21 @@ void CanvasPista::startAutorama(void) {
 	float angulo = (float)(atan((float)tangente.y / (float)tangente.x) * 180) / 3.14;
 
 	// Define as posicoes iniciais do carro
-	Ponto inferiorEsquerdo(pontoBezier.x - 10, pontoBezier.y - 4);
-	Ponto inferiorDireito(pontoBezier.x + 10, pontoBezier.y - 4);
-	Ponto superiorEsquerdo(pontoBezier.x - 10, pontoBezier.y + 4);
-	Ponto superiorDireito(pontoBezier.x + 10, pontoBezier.y + 4);
+	Ponto inferiorEsquerdo(- 10, - 4);
+	Ponto inferiorDireito(10,  - 4);
+	Ponto superiorEsquerdo( - 10,  4);
+	Ponto superiorDireito( 10,  4);
 
 	// Realiza as transformacoes 2D (ordem inversa)
 	Matriz matriz;							// Cria matriz de transformacao
 	matriz.translada(pontoBezier.x, pontoBezier.y);		// Translada para o ponto de bezier
 	matriz.rotacao(angulo);			// Faz a rotacao
-	matriz.translada(-pontoBezier.x, -pontoBezier.y);		// Translada para a origem
 
 	// Novos pontos do carro
 	Ponto novoInferiorEsquerdo = multiplica(matriz.matriz, inferiorEsquerdo);
 	Ponto novoInferiorDireito = multiplica(matriz.matriz, inferiorDireito);
 	Ponto novoSuperiorEsquerdo = multiplica(matriz.matriz, superiorEsquerdo);
 	Ponto novoSuperiorDireito = multiplica(matriz.matriz, superiorDireito);
-
 
 	// Desenha o carro apos as transformacoes
 	color(1, 0, 0);
@@ -344,42 +302,11 @@ void CanvasPista::startAutorama(void) {
 
 	if (buttonViewControlGraphs == true) // Se viewControlGraphs == true, mostra vetor de direcao do carro
 	{
-		color(0, 0, 1);
+		color(1, 1, 0);
 		float moduloTangente = sqrt(pow(tangente.x, 2) + pow(tangente.y, 2));
 		tangente.x = (tangente.x / moduloTangente);
 		tangente.y = (tangente.y / moduloTangente);
-		linef(pontoBezier.x, pontoBezier.y, pontoBezier.x + tangente.x * 40, pontoBezier.y + tangente.y * 40);
-
-		/*Ponto inferiorEsquerdo(pontoBezier.x - 5, pontoBezier.y - 5);
-		Ponto inferiorDireito(pontoBezier.x + 5, pontoBezier.y - 5);
-		Ponto superiorEsquerdo(pontoBezier.x - 5, pontoBezier.y + 5);
-		Ponto superiorDireito(pontoBezier.x + 5, pontoBezier.y + 5);
-
-		if (angulo < 0)
-		{
-			angulo = angulo*(-1);
-			std::cout << angulo << std::endl;
-		}
-
-		// Realiza as transformacoes 2D (ordem inversa)
-		Matriz matriz;							// Cria matriz de transformacao
-		matriz.translada(pontoBezier.x + tangente.x * 40, pontoBezier.y + tangente.y * 40);		// Translada para o ponto de bezier
-		matriz.rotacao( 45);			// Faz a rotacao
-		matriz.translada(-pontoBezier.x, -pontoBezier.y);		// Translada para a origem
-
-		// Novos pontos do carro
-		Ponto novoInferiorEsquerdo = multiplica(matriz.matriz, inferiorEsquerdo);
-		Ponto novoInferiorDireito = multiplica(matriz.matriz, inferiorDireito);
-		Ponto novoSuperiorEsquerdo = multiplica(matriz.matriz, superiorEsquerdo);
-		Ponto novoSuperiorDireito = multiplica(matriz.matriz, superiorDireito);
-
-		color(1, 0, 0);
-		circleFillf(pontoBezier.x, pontoBezier.y, 4, 20);
-		//linef(novoInferiorEsquerdo.x, novoInferiorEsquerdo.y, novoInferiorDireito.x, novoInferiorDireito.y);
-		linef(novoInferiorEsquerdo.x, novoInferiorEsquerdo.y, novoSuperiorEsquerdo.x, novoSuperiorEsquerdo.y);
-		//linef(novoInferiorDireito.x, novoInferiorDireito.y, novoSuperiorDireito.x, novoSuperiorDireito.y);
-		linef(novoSuperiorEsquerdo.x, novoSuperiorEsquerdo.y, novoSuperiorDireito.x, novoSuperiorDireito.y);*/
-
+		linef(pontoBezier.x, pontoBezier.y, pontoBezier.x + tangente.x * 45, pontoBezier.y + tangente.y * 45);
 	}
 }
 
