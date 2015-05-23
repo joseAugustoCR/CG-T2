@@ -17,7 +17,7 @@ Application::Application(void) : Kernel() {
    lockWindowSize(false);
    setFramesPerSecond(60);
 
-   setWindowTitle("Trabalho 2 CG - Curvas: Bezier e B-Spline");
+   setWindowTitle("Trabalho 2 CG - Curvas - Autorama");
 }
 
 Application::~Application(void) {}

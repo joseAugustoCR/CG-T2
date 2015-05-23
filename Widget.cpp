@@ -197,12 +197,12 @@ void CanvasPista::drawRoad()
 		{
 			if ((iFinal - i) <= 3)	 // Se o ultimo segmento tiver mais pontos, podera ser ate grau 5
 			{
-				subPontosDeControle = std::vector<Ponto>(&pontosDeControle[i], &pontosDeControle[pontosDeControle.size()]);
+				subPontosDeControle.assign(std::next(pontosDeControle.begin(), i),pontosDeControle.end());
 				first = true;
 			}
 			else		// Separa as curvas cubicas
 			{
-				subPontosDeControle = std::vector<Ponto>(&pontosDeControle[i], &pontosDeControle[i + 3 + 1]);
+				subPontosDeControle.assign(std::next(pontosDeControle.begin(), i), std::next(pontosDeControle.begin(), i+3+1));
 				first = true;
 			}
 
@@ -257,12 +257,12 @@ void CanvasPista::startAutorama(void) {
 
 	if ((iFinal - posicaoAtual) <= 3)	// Se nao formar mais dois segmentos, o ultimo segmento sera maior
 	{
-		subPontosDeControle2 = std::vector<Ponto>(&pontosDeControle[posicaoAtual], &pontosDeControle[pontosDeControle.size()]);
+		subPontosDeControle2.assign(std::next(pontosDeControle.begin(), posicaoAtual), pontosDeControle.end());
 		first = true;
 	}
 	else		// Forma os segmentos de curvas cubicas
 	{
-		subPontosDeControle2 = std::vector<Ponto>(&pontosDeControle[posicaoAtual], &pontosDeControle[posicaoAtual + 3 + 1]);
+		subPontosDeControle2.assign(std::next(pontosDeControle.begin(), posicaoAtual), std::next(pontosDeControle.begin(), posicaoAtual + 3 + 1));
 		first = true;
 	}
 
