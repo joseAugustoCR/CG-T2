@@ -4,7 +4,7 @@ JOSÉ AUGUSTO COMIOTTO ROTTINI - ENGENHARIA DE COMPUTACAO - UFSM
 
     Definição da classe ponto.
 */
-ifndef PONTO_H
+#ifndef PONTO_H
 #define PONTO_H
 
 
